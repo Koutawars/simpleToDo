@@ -1,4 +1,4 @@
-import Tarea from "./class/Task"
+import Tarea from "./class/Task.js"
 
-var tarea = Tarea("Cosas que hacer");
+var tarea = new Tarea("Cosas que hacer");
 console.log(tarea);
