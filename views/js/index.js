@@ -22,21 +22,27 @@ $(document).on("click", ".delete", (e) => {
     let idTask = getIdTasktoEventButton(e);
     tasks = deleteTaskById(idTask, tasks);
     updateTask(tasks);
+    addTaskButton.off(); // quitar evento del boton de añadir
+    addTaskButton.click(eventAddTaskButton);
 });
 
-// evento de editar tarea
-$(document).on("click", ".edit", (e) => {
-    var idTask = getIdTasktoEventButton(e);
-    var index = getIndexToIdTask(idTask, tasks);
-    $("#contentTask").val(tasks[index].content); // llenar el textarea
-    let eventEditTaskButton = () => {
+// funcion del boton de editar
+function eventEditTaskButton(index){
+    return () => {
         let contentTaskTextArea = $("#contentTask").val();
         tasks[index].content = contentTaskTextArea;
         $("#contentTask").val(''); // limpio el textArea
         updateTask(tasks);
         addTaskButton.off(); // quitar eventos
         addTaskButton.click(eventAddTaskButton); // vuelve como estaba
-    }
+    };
+}
+
+// evento de editar tarea
+$(document).on("click", ".edit", (e) => {
+    var idTask = getIdTasktoEventButton(e);
+    var index = getIndexToIdTask(idTask, tasks);
+    $("#contentTask").val(tasks[index].content); // llenar el textarea
     addTaskButton.off(); // quitar eventos
-    addTaskButton.click(eventEditTaskButton);
+    addTaskButton.click(eventEditTaskButton(index));
 });
