@@ -1,3 +1,4 @@
+//  
 import Task from "./class/Task.js"
 import {updateTask, deleteTaskById, getIdTasktoEventButton, getIndexToIdTask} from "./functions.js"
 
@@ -11,7 +12,7 @@ var eventAddTaskButton = () => {
     let idTask = ++countTask;
     let task = new Task(idTask, contentTaskTextArea);
     tasks.push(task);
-    $("#contentTask").val(''); // limpio el textArea
+    $("#contentTask").val(''); 
     updateTask(tasks);
 }
 
@@ -26,8 +27,8 @@ $(document).on("click", ".delete", (e) => {
     addTaskButton.click(eventAddTaskButton);
 });
 
-// funcion del boton de editar
-function eventEditTaskButton(index){
+// funcion del boton de editar al guardar
+function eventEditTaskButtonToSave(index){
     return () => {
         let contentTaskTextArea = $("#contentTask").val();
         tasks[index].content = contentTaskTextArea;
@@ -38,11 +39,11 @@ function eventEditTaskButton(index){
     };
 }
 
-// evento de editar tarea
+// evento de click para editar una tarea
 $(document).on("click", ".edit", (e) => {
     var idTask = getIdTasktoEventButton(e);
     var index = getIndexToIdTask(idTask, tasks);
     $("#contentTask").val(tasks[index].content); // llenar el textarea
     addTaskButton.off(); // quitar eventos
-    addTaskButton.click(eventEditTaskButton(index));
+    addTaskButton.click(eventEditTaskButtonToSave(index));
 });
